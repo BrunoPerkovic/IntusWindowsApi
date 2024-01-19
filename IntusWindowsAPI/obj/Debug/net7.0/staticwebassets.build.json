@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "qCFpjNZe17+AbqQ3Ci3JaQzbTtbEpMR+3OgjZOH/n5E=",
+  "Source": "IntusWindowsAPI",
+  "BasePath": "_content/IntusWindowsAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
