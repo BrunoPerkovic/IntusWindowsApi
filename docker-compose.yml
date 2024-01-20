@@ -1,38 +1,46 @@
-version: '3.9'
+version: '3.8'
 services:
-  backend:
-    build:
-      context: ./IntusWindowsAPI
-      dockerfile: Dockerfile
-    volumes:
-      - ./IntusWindowsAPI/backend:/app
+  api:
+    build: ./IntusWindowsAPI
     ports:
-      - "8000:8000"
+      - 5000:5000
     depends_on:
       - db
+      - pgadmin
+    networks:
+      - app-network
 
   db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
-    ports:
-      - "5432:5432"
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
     volumes:
-      - ./db-data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - app-network
 
   pgadmin:
     image: dpage/pgadmin4
     restart: always
     environment:
-      PGADMIN_DEFAULT_EMAIL: postgres@postgres.com
-      PGADMIN_DEFAULT_PASSWORD: postgres
+      - PGADMIN_DEFAULT_EMAIL=postgres@postgres.com
+      - PGADMIN_DEFAULT_PASSWORD=postgres
     ports:
-      - "8080:80"
+      - 8080:80
     volumes:
-      - ./pgadmin-data:/var/lib/pgadmin
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - app-network
+
 volumes:
   db-data:
   pgadmin-data:
+
+networks:
+  app-network:
+    driver: bridge

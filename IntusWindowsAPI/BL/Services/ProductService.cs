@@ -56,9 +56,12 @@ public class ProductService : IProductService
         return product;
     }
 
-    public async Task<List<Product>> GetProductsAsync()
+    public async Task<List<Product>> GetProductsAsync(int pageNumber, int pageSize)
     {
-        var products = await _dbContext.Products.ToListAsync();
+        var products = await _dbContext.Products
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
         return products;
     }
 

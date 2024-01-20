@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.8"
+services:
+  api:
+    build:
+      context: "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI"
+      dockerfile: "Dockerfile"
+      target: "build"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/IntusWindowsAPI.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "intuswindowsapi:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\Bruno\\.nuget\\packages:/root/.nuget/packages"
+    - "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI:/app:rw"
+    - "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI:/src:rw"
+    working_dir: "/app"

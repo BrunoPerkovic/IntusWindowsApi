@@ -57,10 +57,10 @@ public class IntusController : ControllerBase
     }
     
     [HttpGet, Route("product", Name = nameof(GetProducts))]
-    public async Task<IActionResult> GetProducts()
+    public async Task<IActionResult> GetProducts([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = int.MaxValue)
     {
         _logger.LogInformation("Getting products");
-        var result = await _productService.GetProductsAsync();
+        var result = await _productService.GetProductsAsync(pageNumber, pageSize);
         _logger.LogInformation("Got products");
         return Ok(result);
     }
