@@ -27,7 +27,7 @@ COPY --from=build /app/out ./
 RUN ls /app
 
 # Expose the port that the application listens on
-EXPOSE 8000
+EXPOSE 5000
 
 # Set the entry point for the container
 ENTRYPOINT ["dotnet", "IntusWindowsAPI.dll"]

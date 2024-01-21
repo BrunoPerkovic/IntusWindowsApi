@@ -28,7 +28,7 @@ public class ProductService : IProductService
         {
             throw new Exception($"ProductDto is not valid: {result}");
         }
-        
+
         var product = new Product
         {
             Name = productDto.Name,
@@ -36,7 +36,9 @@ public class ProductService : IProductService
             Price = productDto.Price,
             Type = productDto.Type,
             Width = productDto.Width,
-            Height = productDto.Height
+            Height = productDto.Height,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         _dbContext.Products.Add(product);
@@ -45,14 +47,16 @@ public class ProductService : IProductService
         return product;
     }
 
-    public async Task<Product> GetProductAsync(int id)
+    public async Task<Product> GetProductAsync(int productId)
     {
-        var product = await _dbContext.Products.FindAsync(id);
+        var product = await _dbContext.Products.FindAsync(productId);
         if (product == null)
         {
-            throw new Exception($"Product with id: {id}, hasn't been found in db.");
+            throw new Exception($"Product with id: {productId}, hasn't been found in db.");
         }
 
+        var productDto = new ProductDto(product.Name, product.Description, product.Price, product.Type,
+            product.Width, product.Height);
         return product;
     }
 
@@ -65,6 +69,15 @@ public class ProductService : IProductService
         return products;
     }
 
+    public async Task<List<Product>> GetProductsByOrderAsync(int orderId)
+    {
+        var products = await _dbContext.OrderProducts
+            .Where(op => op.OrderId == orderId)
+               .Select(op => op.Product)
+            .ToListAsync();
+        return products;
+    }
+
     public async Task<List<Product>> GetProductsByTypeAsync(ProductType type)
     {
         var products = await _dbContext.Products.Where(p => p.Type == type)
@@ -72,7 +85,7 @@ public class ProductService : IProductService
         return products;
     }
 
-    public async Task<Product> UpdateProductAsync(int id, ProductDto productDto)
+    public async Task<Product> UpdateProductAsync(int productId, ProductDto productDto)
     {
         ProductDtoValidation validator = new ProductDtoValidation();
         ValidationResult result = validator.Validate(productDto);
@@ -80,11 +93,11 @@ public class ProductService : IProductService
         {
             throw new Exception($"ProductDto is not valid: {result}");
         }
-        
-        var product = await GetProductAsync(id: id);
+
+        var product = await GetProductAsync(productId: productId);
         if (product == null)
         {
-            throw new Exception($"Product with id: {id}, not found in db.");
+            throw new Exception($"Product with id: {productId}, not found in db.");
         }
 
         product.Name = productDto.Name;
@@ -93,18 +106,19 @@ public class ProductService : IProductService
         product.Type = productDto.Type;
         product.Width = productDto.Width;
         product.Height = productDto.Height;
+        product.UpdatedAt = DateTime.UtcNow;
 
         await _dbContext.SaveChangesAsync();
 
         return product;
     }
 
-    public async Task DeleteProductAsync(int id)
+    public async Task DeleteProductAsync(int productId)
     {
-        var product = await GetProductAsync(id: id);
+        var product = await GetProductAsync(productId: productId);
         if (product == null)
         {
-            throw new Exception($"Product with id: {id}, not found in db.");
+            throw new Exception($"Product with id: {productId}, not found in db.");
         }
 
         _dbContext.Products.Remove(product);

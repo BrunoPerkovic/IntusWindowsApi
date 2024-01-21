@@ -32,7 +32,9 @@ public class OrderService : IOrderService
         {
             Name = orderDto.Name,
             State = orderDto.State,
-            OrderProducts = new List<OrderProduct>() // Initialize the OrderProducts list
+            OrderProducts = new List<OrderProduct>(), // Initialize the OrderProducts list
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
 
         _dbContext.Orders.Add(order);
@@ -44,18 +46,21 @@ public class OrderService : IOrderService
     public async Task<Order> GetOrderAsync(int id)
     {
         var order = await _dbContext.Orders
-            .Include(o => o.OrderProducts) // Include the OrderProducts list
             .FirstOrDefaultAsync(o => o.Id == id);
         if (order == null)
         {
             throw new Exception($"Order with id: {id}, not found in db.");
         }
+
         return order;
     }
 
-    public async Task<List<Order>> GetOrdersAsync()
+    public async Task<List<Order>> GetOrdersAsync(int pageNumber, int pageSize)
     {
-        var orders = await _dbContext.Orders.ToListAsync();
+        var orders = await _dbContext.Orders
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
         return orders;
     }
 
@@ -67,16 +72,17 @@ public class OrderService : IOrderService
         {
             throw new Exception($"OrderDto is not valid: {result}");
         }
-        
+
         var order = await GetOrderAsync(id: id);
         if (order == null)
         {
             throw new Exception($"Order with id: {id}, not found in db.");
         }
-        
+
         order.Name = orderDto.Name;
         order.State = orderDto.State;
-        
+        order.UpdatedAt = DateTime.UtcNow;
+
         await _dbContext.SaveChangesAsync();
         return order;
     }
@@ -111,11 +117,12 @@ public class OrderService : IOrderService
         }
 
         order.OrderProducts.Add(orderProduct);
+        order.UpdatedAt = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
 
         // Map the Order object to an OrderDto
         var orderDto = new OrderDto(order.Name, order.State);
-        
+
         return orderDto;
     }
 
@@ -145,13 +152,15 @@ public class OrderService : IOrderService
         }
 
         order.OrderProducts.Remove(orderProduct);
+        order.UpdatedAt = DateTime.UtcNow;
+
         await _dbContext.SaveChangesAsync();
-        
+
         var orderDto = new OrderDto(order.Name, order.State);
-        
+
         return orderDto;
     }
-    
+
     public async Task<OrderDto> RemoveAllProductsFromOrderAsync(int id)
     {
         var order = await GetOrderAsync(id: id);
@@ -166,8 +175,10 @@ public class OrderService : IOrderService
         }
 
         order.OrderProducts.Clear();
+        order.UpdatedAt = DateTime.UtcNow;
+
         await _dbContext.SaveChangesAsync();
-        
+
         var orderDto = new OrderDto(order.Name, order.State);
         return orderDto;
     }

@@ -65,6 +65,20 @@ public class IntusController : ControllerBase
         return Ok(result);
     }
     
+    [HttpGet, Route("product/{orderId}/order", Name = nameof(GetProductsByOrder))]
+    public async Task<IActionResult> GetProductsByOrder(int orderId)
+    {
+        if (orderId < 1)
+        {
+            return BadRequest();
+        }
+        
+        _logger.LogInformation("Getting products");
+        var result = await _productService.GetProductsByOrderAsync(orderId);
+        _logger.LogInformation("Got products");
+        return Ok(result);
+    }
+    
     [HttpGet, Route("product/{type}/type", Name = nameof(GetProductsByType))]
     public async Task<IActionResult> GetProductsByType(ProductType type)
     {
@@ -126,10 +140,10 @@ public class IntusController : ControllerBase
     }
     
     [HttpGet, Route("order", Name = nameof(GetOrders))]
-    public async Task<IActionResult> GetOrders()
+    public async Task<IActionResult> GetOrders([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = int.MaxValue)
     {
         _logger.LogInformation("Getting orders");
-        var result = await _orderService.GetOrdersAsync();
+        var result = await _orderService.GetOrdersAsync(pageNumber, pageSize);
         _logger.LogInformation("Got orders");
         return Ok(result);
     }

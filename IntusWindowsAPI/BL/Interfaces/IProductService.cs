@@ -6,10 +6,11 @@ namespace IntusWindowsAPI.BL.Interfaces;
 public interface IProductService
 {
     Task<Product> CreateProductAsync(ProductDto productDto);
-    Task<Product> GetProductAsync(int id);
+    Task<Product> GetProductAsync(int productId);
     Task<List<Product>> GetProductsAsync(int pageNumber, int pageSize);
+    Task<List<Product>> GetProductsByOrderAsync(int orderId);
     Task<List<Product>> GetProductsByTypeAsync(ProductType type);
-    Task<Product> UpdateProductAsync(int id, ProductDto productDto);
-    Task DeleteProductAsync(int id);
+    Task<Product> UpdateProductAsync(int productId, ProductDto productDto);
+    Task DeleteProductAsync(int productId);
     
 }
