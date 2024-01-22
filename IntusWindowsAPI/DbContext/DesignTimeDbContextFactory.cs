@@ -5,6 +5,11 @@ namespace IntusWindowsAPI.DbContext;
 
 public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
+    private static string Host = "postgresintus.postgres.database.azure.com";
+    private static string User = "amarant1995";
+    private static string DBname= "postgres";
+    private static string Password = "37miMehino!";
+    private static string Port = "5432";
     public AppDbContext CreateDbContext(string[] args)
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
@@ -13,9 +18,16 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
             .Build();
 
         string connectionString = configuration.GetSection("ConnectionStrings:IntusDb").Value;
-
+        string connString =
+            String.Format(
+                "Server={0};Username={1};Database={2};Port={3};Password={4};SSLMode=Prefer",
+                Host,
+                User,
+                DBname,
+                Port,
+                Password);
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseNpgsql(connectionString);
+        optionsBuilder.UseNpgsql(connString);
 
         return new AppDbContext(optionsBuilder.Options);
     }

@@ -1549,11 +1549,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Bruno\\Desktop\\IntusWindowsApi\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
       "projectName": "IntusWindowsAPI",
-      "projectPath": "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
+      "projectPath": "C:\\Users\\Bruno\\Desktop\\IntusWindowsApi\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
       "packagesPath": "C:\\Users\\Bruno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI\\obj\\",
+      "outputPath": "C:\\Users\\Bruno\\Desktop\\IntusWindowsApi\\IntusWindowsAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Bruno\\AppData\\Roaming\\NuGet\\NuGet.Config",

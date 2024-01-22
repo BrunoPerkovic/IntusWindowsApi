@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TscHNhVHsPjuSVRq37i7KXYsYJXSjj3W0U6tC5MYCt1SNPqT70dCZfSGQzNTZfKUix6d6RQ8mZt8L5Y5v9IInA==",
+  "dgSpecHash": "JOd1qn8C0IWERdr9jsWkFW3IK7BavDUZceSaZOUIeSY3CU+i5Vp7z0oTWun1V5MSGetA8zZlFu3XWOeTvMXQRg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bruno\\RiderProjects\\IntusWindowsAPI\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
+  "projectFilePath": "C:\\Users\\Bruno\\Desktop\\IntusWindowsApi\\IntusWindowsAPI\\IntusWindowsAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bruno\\.nuget\\packages\\extensions.entityframeworkcore.datamigration\\6.0.1\\extensions.entityframeworkcore.datamigration.6.0.1.nupkg.sha512",
     "C:\\Users\\Bruno\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
