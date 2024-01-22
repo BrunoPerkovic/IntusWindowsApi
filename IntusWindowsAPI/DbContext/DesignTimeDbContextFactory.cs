@@ -26,8 +26,11 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<AppDbConte
                 DBname,
                 Port,
                 Password);
+        var st =
+            "Server=postgresintus.postgres.database.azure.com;Database=postgres;Port=5432;User Id=amarant1995;Password=37miMehino!;SSL Mode=Require;Trust Server Certificate=True";
+
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseNpgsql(connString);
+        optionsBuilder.UseNpgsql(st);
 
         return new AppDbContext(optionsBuilder.Options);
     }

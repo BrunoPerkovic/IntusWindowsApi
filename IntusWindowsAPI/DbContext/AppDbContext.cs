@@ -34,7 +34,10 @@ public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
                     DBname,
                     Port,
                     Password);
-            optionsBuilder.UseNpgsql(connString ?? connectionString);
+            var st =
+                "Server=postgresintus.postgres.database.azure.com;Database=postgres;Port=5432;User Id=amarant1995;Password=37miMehino!;SSL Mode=Require;Trust Server Certificate=True";
+
+            optionsBuilder.UseNpgsql(st ?? connectionString);
         }
     }
 
