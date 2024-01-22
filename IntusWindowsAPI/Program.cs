@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(o =>
 {
-    o.UseNpgsql(builder.Configuration.GetConnectionString("IntusDb"));
+    o.UseNpgsql(builder.Configuration.GetConnectionString("Intus"));
     o.EnableDetailedErrors();
 });
 builder.Services.AddScoped<IProductService, ProductService>();
