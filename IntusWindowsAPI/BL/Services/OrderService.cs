@@ -32,7 +32,7 @@ public class OrderService : IOrderService
         {
             Name = orderDto.Name,
             State = orderDto.State,
-            OrderProducts = new List<OrderProduct>(), // Initialize the OrderProducts list
+            OrderProducts = new List<OrderProduct>(),
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
@@ -120,7 +120,6 @@ public class OrderService : IOrderService
         order.UpdatedAt = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
 
-        // Map the Order object to an OrderDto
         var orderDto = new OrderDto(order.Name, order.State);
 
         return orderDto;
@@ -191,7 +190,6 @@ public class OrderService : IOrderService
             throw new Exception($"Order with id: {id}, not found in db.");
         }
 
-        // Remove all associated OrderProduct entries
         _dbContext.OrderProducts.RemoveRange(order.OrderProducts);
 
         _dbContext.Orders.Remove(order);
