@@ -20,7 +20,6 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<ILogger, Logger<ProductService>>();
 builder.Services.AddScoped<ILogger, Logger<OrderService>>();
 
-// Add CORS services
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins",
@@ -32,15 +31,6 @@ builder.Services.AddCors(options =>
                 .AllowAnyHeader();
         });
 });
-
-// Configure Kestrel server options
-/*
-builder.WebHost.ConfigureKestrel(serverOptions =>
-{
-    // Set properties and call methods on options
-    serverOptions.ListenAnyIP(5000);
-});
-*/
 
 var app = builder.Build();
 
@@ -54,7 +44,6 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
-// Use CORS middleware with the policy
 app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
