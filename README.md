@@ -1,5 +1,4 @@
 ﻿# IntusWindows
 
 
-Task for IntusWindows company api section
-asgasgasgggasd
+API part of the project for IntusWindows Company. First round of the Job interview Process
